@@ -1,0 +1,102 @@
+# Copyright (c) 2023 Arm Limited and/or its affiliates
+# <open-source-office@arm.com>
+# SPDX-License-Identifier: MIT
+
+name: CI Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - closed
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone This Repo
+        uses: actions/checkout@v3
+      - name: Run spellings check
+        uses: FreeRTOS/CI-CD-Github-Actions/spellings@main
+
+  link-verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Links
+        uses: FreeRTOS/CI-CD-Github-Actions/link-verifier@main
+        with:
+          exclude-urls: 'https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-\`uname'
+
+  verify-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Run manifest verifier
+        uses: FreeRTOS/CI-CD-GitHub-Actions/manifest-verifier@main
+        with:
+          fail-on-incorrect-version: true
+
+  git-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Checkout awslabs/git-secrets
+        uses: actions/checkout@v3
+        with:
+          repository: awslabs/git-secrets
+          ref: master
+          path: git-secrets
+      - name: Install git-secrets
+        run: cd git-secrets && sudo make install && cd ..
+      - name: Run git-secrets
+        run: |
+          git-secrets --register-aws
+          git-secrets --scan
+
+  formatting:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.workspace }}
+          submodules: 'recursive'
+      - name: Check formatting
+        shell: bash
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install fd-find
+          ./tools/scripts/run_uncrustify.sh
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+    # Add submodules including fff and googletest.
+    - name: Checkout project
+      uses: actions/checkout@v3
+      with:
+          path: ${{ github.workspace }}
+          submodules: 'recursive'
+    - name: Install unit test build dependencies
+      shell: bash
+      run: |
+        pip install cmake ninja
+    # Run the unit tests
+    - name: Run unit tests
+      shell: bash
+      run: |
+        cmake -S . -B build_unit_test -GNinja -DOPT_ENABLE_COVERAGE=ON
+        cmake --build build_unit_test
+        ctest --test-dir build_unit_test --output-on-failure
