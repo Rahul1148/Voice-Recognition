@@ -1,0 +1,12 @@
+;/* Copyright 2023 Arm Limited and/or its affiliates
+; * <open-source-office@arm.com>
+; * SPDX-License-Identifier: MIT
+; */
+
+#include "provisioning_config.h"
+
+LR_DATA PROVISIONING_DATA_START {
+    RO_DATA PROVISIONING_DATA_START PROVISIONING_DATA_LEN{
+        *
+    }
+}
