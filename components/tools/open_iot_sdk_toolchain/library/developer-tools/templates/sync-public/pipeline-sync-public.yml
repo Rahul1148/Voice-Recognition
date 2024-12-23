@@ -1,0 +1,59 @@
+# Copyright (c) 2022 Arm Limited and Contributors. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+variables:
+  UTILS_SCRIPTS_DIR: ${CI_PROJECT_DIR}/utils/scripts
+  SYNC_DESTINATION: 'https://${GITLAB_USER_ID}:${PUBLIC_SDK_TOKEN}@git.gitlab.arm.com/iot/open-iot-sdk/${CI_PROJECT_NAME}.git'
+  RETRY_LIMIT: 100
+.push-public:
+  image: ${OPEN_IOT_SDK_DOCKER_REGISTRY}/sanity:v1
+  tags:
+    - iotmsw-amd64
+  rules:
+    # SYNC_TO_PUBLIC should be set in CI/CD variable to run this
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $SYNC_TO_PUBLIC == "true"
+  script:
+    - git fetch origin ${CI_COMMIT_BRANCH}
+    - git remote add public ${SYNC_DESTINATION}
+    - |
+      if [[ "$CI_PROJECT_NAME" != "developer-tools" ]]; then
+        UTILS_SCRIPTS_DIR=${CI_PROJECT_DIR}/developer-tools/utils/scripts
+      fi
+      RETRY_SCRIPT=${UTILS_SCRIPTS_DIR}/retry_cmd.sh
+    - >
+      ${RETRY_SCRIPT}
+      "git push public HEAD:refs/heads/${CI_COMMIT_BRANCH}"
+      ${RETRY_LIMIT}
+
+  stage: sync-public
+
+.pull-public:
+  image: ${OPEN_IOT_SDK_DOCKER_REGISTRY}/sanity:v1
+  tags:
+    - iotmsw-amd64
+  variables:
+    # Need to check out remote repository
+    GIT_STRATEGY: none
+  rules:
+    # This job is normally run using a scheduled pipeline
+    # SYNC_FROM_PUBLIC should be set in CI/CD variable in the scheduled pipeline
+    - if: $SYNC_FROM_PUBLIC == "true"
+  script:
+    # checkout branch that needs to be synced
+    # Since it is run only in $CI_DEFAULT_BRANCH only default branch will be synced
+    - git clone ${SYNC_DESTINATION} . -b ${CI_COMMIT_BRANCH}
+    # from environment variable, parse url for setting in git remote
+    - repo_url=$(echo ${CI_REPOSITORY_URL}  | cut -d@ -f2)
+    # AUTOBOT_GITLAB_TOKEN is set in CD/CD variable in internal GITLAB
+    - git remote add internal "https://${GITLAB_USER_ID}:${AUTOBOT_GITLAB_TOKEN}@${repo_url}"
+    - |
+      if [[ "$CI_PROJECT_NAME" != "developer-tools" ]]; then
+        UTILS_SCRIPTS_DIR=${CI_PROJECT_DIR}/developer-tools/utils/scripts
+      fi
+      RETRY_SCRIPT=${UTILS_SCRIPTS_DIR}/retry_cmd.sh
+    - >
+      ${RETRY_SCRIPT}
+      "git push internal HEAD:${CI_COMMIT_BRANCH}"
+      ${RETRY_LIMIT}
+
+  stage: sync-public

@@ -1,0 +1,1 @@
+ci: Skip jobs that already passed in MR

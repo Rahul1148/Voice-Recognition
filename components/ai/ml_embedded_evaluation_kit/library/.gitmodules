@@ -1,0 +1,18 @@
+[submodule "dependencies/tensorflow"]
+	path = dependencies/tensorflow
+	url = https://github.com/tensorflow/tflite-micro.git
+[submodule "dependencies/cmsis"]
+	path = dependencies/cmsis
+	url = https://github.com/ARM-software/CMSIS_5.git
+[submodule "dependencies/core_driver"]
+	path = dependencies/core-driver
+	url = https://review.mlplatform.org/ml/ethos-u/ethos-u-core-driver
+[submodule "dependencies/core-platform"]
+	path = dependencies/core-platform
+	url = https://review.mlplatform.org/ml/ethos-u/ethos-u-core-platform
+[submodule "dependencies/cmsis-dsp"]
+	path = dependencies/cmsis-dsp
+	url = https://github.com/ARM-software/CMSIS-DSP.git
+[submodule "dependencies/cmsis-nn"]
+	path = dependencies/cmsis-nn
+	url = https://github.com/ARM-software/CMSIS-NN.git

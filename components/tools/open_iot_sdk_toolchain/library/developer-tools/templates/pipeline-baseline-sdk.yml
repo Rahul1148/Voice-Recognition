@@ -1,0 +1,53 @@
+# Copyright (c) 2021 Arm Limited and Contributors. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+# Include this pipeline for new projects, brings all required
+# common pipelines together
+# The jobs are visible, just include this yml file and all
+# of them become part of the pipeline in the project
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+# Normally, workflow rules are enabled for all the below and "main" branch
+# Since, main branch is already tested and quite heavy, we do not need to run
+# most jobs already run. The below rule skips the job on main branch.
+.base-job-rules:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_REF_NAME =~ /^release-.*/
+    - if: $CI_PIPELINE_SOURCE == "web"
+
+include:
+  - '/templates/license/pipeline-license.yml'
+  - '/templates/pre-commit/pipeline-pre-commit.yml'
+  - '/templates/tpip-checker/pipeline-tpip-checker.yml'
+  - '/templates/gitlint/pipeline-gitlint.yml'
+  - '/templates/towncrier/pipeline-changelog.yml'
+
+pre-commit:
+  extends:
+    - .pre-commit-check
+    - .base-job-rules
+
+license:
+  extends:
+    - .license-check
+    - .base-job-rules
+
+gitlint:
+  extends:
+    - .gitlint-check
+
+changelog:
+  extends:
+    - .check-changelog-addition
+
+tpip-check:
+  extends:
+    - .tpip-check
+    - .base-job-rules
+
+# release:
+#   extends:
+#     - .create-release

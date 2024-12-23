@@ -1,0 +1,19 @@
+# Copyright (c) 2022 Arm Limited and Contributors. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+.tpip-check:
+  tags:
+    - iotmsw-amd64
+  image: ${OPEN_IOT_SDK_DOCKER_REGISTRY}/sanity:v1
+  stage: quality-check
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+  script:
+    - env
+    - set -x
+    - |
+      TEMPLATE_DIR=${CI_PROJECT_DIR}
+      if [[ "$CI_PROJECT_NAME" != "developer-tools" ]]; then
+        TEMPLATE_DIR=${CI_PROJECT_DIR}/developer-tools
+      fi
+    - python ${TEMPLATE_DIR}/templates/tpip-checker/tpip_checker.py --server-url "${CI_SERVER_URL}" --private-token "${AUTOBOT_GITLAB_TOKEN}" --project-id "${CI_PROJECT_ID}" --merge-req-id "${CI_MERGE_REQUEST_IID}"

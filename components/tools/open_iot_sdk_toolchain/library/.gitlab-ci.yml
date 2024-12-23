@@ -1,0 +1,36 @@
+# Copyright (c) 2023 Arm Limited and Contributors. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+include:
+  - project: '${OPEN_IOT_SDK_BASE_GROUP}/tools/developer-tools'
+    ref: 1e0fb5dbc3ca75e3379944db42ba5148dfc11d87
+    file:
+      - '/templates/pipeline-baseline-sdk.yml'
+      - '/templates/sync-public/pipeline-sync-public.yml'
+
+variables:
+  GIT_CLONE_PATH: /builds/workspace
+  GIT_SUBMODULE_STRATEGY: recursive
+  SYNC_DESTINATION : 'https://${GITLAB_USER_ID}:${PUBLIC_SDK_TOKEN}@git.gitlab.arm.com/iot/open-iot-sdk/${CI_PROJECT_NAME}.git'
+
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_REF_NAME =~ /^release-.*/
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+stages:
+  - quality-check
+  - sync-public
+
+# This is triggered when a commit is added to the DEFAULT(often `main`) branch in internal GitLab
+# This job will push DEFAULT branch changes to the public GitLab
+push-public:
+  extends: .push-public
+  stage: sync-public
+
+# This job is triggered by scheduled pipeline of this repository running in internal GitLab.
+# This job will pull changes of the branch which is set to run the scheduled pipeline (often `main` branch).
+pull-public:
+  extends: .pull-public
+  stage: sync-public

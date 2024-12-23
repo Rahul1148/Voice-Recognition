@@ -1,0 +1,93 @@
+# Copyright (c) 2022 Arm Limited and Contributors. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+variables:
+  RETRY_LIMIT: 100
+  TOWNCRIER_TEMPLATE_DIR: $CI_PROJECT_DIR
+  UTILS_SCRIPTS_DIR: ${CI_PROJECT_DIR}/utils/scripts
+  SYNC_DESTINATION: 'https://${GITLAB_USER_ID}:${PUBLIC_SDK_TOKEN}@git.gitlab.arm.com/iot/open-iot-sdk/${CI_PROJECT_NAME}.git'
+
+.check-changelog-addition:
+  tags:
+    - iotmsw-amd64
+  image: ${OPEN_IOT_SDK_DOCKER_REGISTRY}/sanity:v1
+  stage: quality-check
+  rules:
+    # skip this check if exclusively marked
+    - if: $CI_MERGE_REQUEST_ID && $CI_MERGE_REQUEST_LABELS !~ /.*SKIP_CHANGELOG.*/
+  script:
+    - env
+    - |
+      if [[ "$CI_PROJECT_NAME" != "developer-tools" ]]; then
+        TOWNCRIER_TEMPLATE_DIR=${CI_PROJECT_DIR}/developer-tools
+      fi
+    - git fetch origin $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+    - towncrier check --compare-with origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME} --config ${TOWNCRIER_TEMPLATE_DIR}/templates/towncrier/towncrier.toml --dir .
+
+change-log-preview:
+  tags:
+    - iotmsw-amd64
+  stage: quality-check
+  image: ${OPEN_IOT_SDK_DOCKER_REGISTRY}/sanity:v1
+  script:
+    - set -x
+    - |
+      if [[ "$CI_PROJECT_NAME" != "developer-tools" ]]; then
+        TOWNCRIER_TEMPLATE_DIR=${CI_PROJECT_DIR}/developer-tools
+      fi
+    - towncrier build --version "${RELEASE_VERSION}" --dir release-changes --config ${TOWNCRIER_TEMPLATE_DIR}/templates/towncrier/towncrier.toml --yes
+    - cat CHANGELOG.md
+  rules:
+    - if: $RELEASE_VERSION
+
+.create-release:
+  tags:
+    - iotmsw-amd64
+  image: ${OPEN_IOT_SDK_DOCKER_REGISTRY}/sanity:v1
+  stage: .post
+  rules:
+    - if: $RELEASE_VERSION
+      when: manual
+  script:
+    - set -x
+    - git config --global user.email "autobot-noreply@arm.com"
+    - git config --global user.name "autobot"
+    - git fetch origin ${CI_COMMIT_BRANCH}
+    - git checkout ${CI_COMMIT_BRANCH}
+    - |
+      if [[ "$CI_PROJECT_NAME" != "developer-tools" ]]; then
+        TOWNCRIER_TEMPLATE_DIR=${CI_PROJECT_DIR}/developer-tools
+      fi
+    - |
+      # Generate changelog from news fragments
+      towncrier build --version "${RELEASE_VERSION}" --dir release-changes --config ${TOWNCRIER_TEMPLATE_DIR}/templates/towncrier/towncrier.toml --yes
+      git commit -sm "release: Prepare for release ${RELEASE_VERSION}"
+
+    - |
+      repo_url=$(echo ${CI_REPOSITORY_URL}  | cut -d@ -f2)
+      git remote add internal "https://${GITLAB_USER_ID}:${AUTOBOT_GITLAB_TOKEN}@${repo_url}"
+      if [ $SYNC_TO_PUBLIC == "true" ]; then
+        git remote add public ${SYNC_DESTINATION}
+      fi
+    - |
+      if [[ "$CI_PROJECT_NAME" != "developer-tools" ]]; then
+        UTILS_SCRIPTS_DIR=${CI_PROJECT_DIR}/developer-tools/utils/scripts
+      fi
+      RETRY_SCRIPT=${UTILS_SCRIPTS_DIR}/retry_cmd.sh
+
+    # push branch, tagt ot internal
+    - |
+      ${RETRY_SCRIPT} "git push internal ${CI_COMMIT_BRANCH}" 100
+      git tag ${RELEASE_VERSION}
+      ${RETRY_SCRIPT} "git push internal ${RELEASE_VERSION}" 100
+
+    # push branch/tags to public
+    - |
+      if [ $SYNC_TO_PUBLIC == "true" ]; then
+        git fetch origin ${CI_COMMIT_BRANCH}
+        ${RETRY_SCRIPT} "git push public FETCH_HEAD:refs/heads/${CI_COMMIT_BRANCH}" 100
+        git fetch origin ${RELEASE_VERSION}
+        ${RETRY_SCRIPT} "git push public FETCH_HEAD:refs/tags/${RELEASE_VERSION}" 100
+      fi
+
+  allow_failure: false

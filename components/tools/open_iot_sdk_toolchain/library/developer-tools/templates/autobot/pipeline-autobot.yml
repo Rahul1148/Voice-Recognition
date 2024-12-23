@@ -1,0 +1,21 @@
+# Copyright (c) 2022 Arm Limited and Contributors. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+.autobot:
+  image: ${OPEN_IOT_SDK_DOCKER_REGISTRY}/sanity:v1
+  variables:
+    AUTO_MERGE : "false"
+    KUBERNETES_CPU_REQUEST: 1
+    KUBERNETES_MEMORY_REQUEST: 1Gi
+  script:
+    - env
+    - set -x
+    - >
+      python developer-tools/templates/autobot/update_components.py
+      --server-url "${CI_SERVER_URL}"
+      --private-token "${AUTOBOT_TOKEN}"
+      --project-id "${CI_PROJECT_ID}"
+      --target-branch "${CI_COMMIT_REF_NAME}"
+      --auto-merge "${AUTO_MERGE}"
+  rules:
+    - if: $UPDATE_COMPONENTS == "true"

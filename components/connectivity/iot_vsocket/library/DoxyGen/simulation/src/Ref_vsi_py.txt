@@ -1,0 +1,14 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== VSI ====
+/**
+\defgroup arm_vsi_py VSI Python interface
+\ingroup arm_vsi
+\brief      VSI python interface.
+\details
+
+The Python interface described in this section triggers on peripheral registers and events of the \ref arm_vsi_api.
+Each peripheral instance has a separate dedicated Python script file with the names **arm_vsi0.py**, **arm_vsi1.py**, ..., **arm_vsi7.py**.
+
+The path to the python files implementing used interfaces shall be provided to the target in \ref Execution "-V command line option".
+
+*/

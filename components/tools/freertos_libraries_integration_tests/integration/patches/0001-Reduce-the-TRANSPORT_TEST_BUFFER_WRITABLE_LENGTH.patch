@@ -1,0 +1,30 @@
+From 4ac525a90937f0f0f11c383b481285acef7e3125 Mon Sep 17 00:00:00 2001
+From: Ahmed Ismail <Ahmed.Ismail@arm.com>
+Date: Mon, 1 Jul 2024 14:49:21 +0100
+Subject: [PATCH 1/3] Reduce the `TRANSPORT_TEST_BUFFER_WRITABLE_LENGTH`
+
+The `TRANSPORT_TEST_BUFFER_WRITABLE_LENGTH` is set to `2048`. Reduce it
+to `1350`, so that the test data can be sent in a single ethernet
+packet.
+
+Signed-off-by: Devaraj Ranganna <devaraj.ranganna@arm.com>
+---
+ src/transport_interface/transport_interface_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/transport_interface/transport_interface_test.c b/src/transport_interface/transport_interface_test.c
+index 32009dc..ccc6507 100644
+--- a/src/transport_interface/transport_interface_test.c
++++ b/src/transport_interface/transport_interface_test.c
+@@ -59,7 +59,7 @@
+  * verified to remain unchanged after each test.
+  */
+ #define TRANSPORT_TEST_BUFFER_PREFIX_GUARD_LENGTH    ( 32U )
+-#define TRANSPORT_TEST_BUFFER_WRITABLE_LENGTH        ( 2048U )
++#define TRANSPORT_TEST_BUFFER_WRITABLE_LENGTH        ( 1350U )
+ #define TRANSPORT_TEST_BUFFER_SUFFIX_GUARD_LENGTH    ( 32U )
+ #define TRANSPORT_TEST_BUFFER_TOTAL_LENGTH        \
+     ( TRANSPORT_TEST_BUFFER_PREFIX_GUARD_LENGTH + \
+-- 
+2.34.1
+
