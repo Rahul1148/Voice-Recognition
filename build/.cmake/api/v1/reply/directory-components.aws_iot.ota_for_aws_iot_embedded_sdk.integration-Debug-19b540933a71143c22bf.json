@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "components/aws_iot/ota_for_aws_iot_embedded_sdk/integration",
+		"source" : "components/aws_iot/ota_for_aws_iot_embedded_sdk/integration"
+	}
+}

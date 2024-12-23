@@ -1,0 +1,106 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "components/aws_iot/ota_for_aws_iot_embedded_sdk/library_mocks/libota-for-aws-iot-embedded-sdk-mock.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_include_directories",
+			"target_link_libraries"
+		],
+		"files" : 
+		[
+			"components/aws_iot/ota_for_aws_iot_embedded_sdk/library_mocks/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 6,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "/workspaces/iot-reference-arm-corstone3xx/components/aws_iot/ota_for_aws_iot_embedded_sdk/library_mocks/inc"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/workspaces/iot-reference-arm-corstone3xx/components/aws_iot/ota_for_aws_iot_embedded_sdk/library_mocks/portable/os"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/workspaces/iot-reference-arm-corstone3xx/components/tools/fff/library"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"id" : "ota-for-aws-iot-embedded-sdk-mock::@b15e38f75675534f9bf0",
+	"name" : "ota-for-aws-iot-embedded-sdk-mock",
+	"nameOnDisk" : "libota-for-aws-iot-embedded-sdk-mock.a",
+	"paths" : 
+	{
+		"build" : "components/aws_iot/ota_for_aws_iot_embedded_sdk/library_mocks",
+		"source" : "components/aws_iot/ota_for_aws_iot_embedded_sdk/library_mocks"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "components/aws_iot/ota_for_aws_iot_embedded_sdk/library_mocks/src/ota.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

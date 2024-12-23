@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "components/security/freertos_ota_pal_psa",
+		"source" : "components/security/freertos_ota_pal_psa"
+	}
+}

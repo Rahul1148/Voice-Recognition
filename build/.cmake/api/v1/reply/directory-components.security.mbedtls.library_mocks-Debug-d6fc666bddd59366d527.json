@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "components/security/mbedtls/library_mocks",
+		"source" : "components/security/mbedtls/library_mocks"
+	}
+}

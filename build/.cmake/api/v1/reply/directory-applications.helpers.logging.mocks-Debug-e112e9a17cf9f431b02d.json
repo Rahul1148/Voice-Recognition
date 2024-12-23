@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "applications/helpers/logging/mocks",
+		"source" : "applications/helpers/logging/mocks"
+	}
+}

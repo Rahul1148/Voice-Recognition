@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "components/freertos_kernel/library_mocks",
+		"source" : "components/freertos_kernel/library_mocks"
+	}
+}

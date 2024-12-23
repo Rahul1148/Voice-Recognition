@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "components/connectivity/freertos_plus_tcp/integration",
+		"source" : "components/connectivity/freertos_plus_tcp/integration"
+	}
+}

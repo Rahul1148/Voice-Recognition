@@ -1,0 +1,5 @@
+if(EXISTS "/workspaces/iot-reference-arm-corstone3xx/build/components/aws_iot/ota_for_aws_iot_embedded_sdk/integration/tests/ota-agent-task-test[1]_tests.cmake")
+  include("/workspaces/iot-reference-arm-corstone3xx/build/components/aws_iot/ota_for_aws_iot_embedded_sdk/integration/tests/ota-agent-task-test[1]_tests.cmake")
+else()
+  add_test(ota-agent-task-test_NOT_BUILT ota-agent-task-test_NOT_BUILT)
+endif()

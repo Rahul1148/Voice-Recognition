@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "components/aws_iot/coremqtt_agent/integration/tests",
+		"source" : "components/aws_iot/coremqtt_agent/integration/tests"
+	}
+}

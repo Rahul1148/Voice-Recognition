@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Linux-g++"
+	BuildStamp="20241013-1016-Experimental"
+	Name="544583c46097"
+	Generator="ctest-3.30.4"
+	CompilerName="/usr/lib/ccache/g++"
+	CompilerVersion="11.4.0"
+	OSName="Linux"
+	Hostname="544583c46097"
+	OSRelease="5.15.0-122-generic"
+	OSVersion="#132~20.04.1-Ubuntu SMP Fri Aug 30 15:50:07 UTC 2024"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="78"
+	ProcessorCacheSize="4096"
+	NumberOfLogicalCPU="4"
+	NumberOfPhysicalCPU="2"
+	TotalVirtualMemory="2047"
+	TotalPhysicalMemory="15880"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="2800"
+	>
+	<Testing>
+		<StartDateTime>Oct 13 10:16 UTC</StartDateTime>
+		<StartTestTime>1728814593</StartTestTime>
+		<TestList/>
+		<EndDateTime>Oct 13 10:16 UTC</EndDateTime>
+		<EndTestTime>1728814593</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
