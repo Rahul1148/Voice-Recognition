@@ -1,0 +1,78 @@
+[submodule "arm_corstone_platform_bsp"]
+	path = bsp/library
+	url = https://git.gitlab.arm.com/iot/open-iot-sdk/arm-corstone-platform-bsp.git
+[submodule "backoff_algorithm"]
+	path = components/connectivity/backoff_algorithm/library
+	url = https://github.com/FreeRTOS/backoffAlgorithm.git
+[submodule "corejson"]
+	path = components/aws_iot/corejson/library
+	url = https://github.com/FreeRTOS/coreJSON.git
+[submodule "coremqtt"]
+	path = components/aws_iot/coremqtt/library
+	url = https://github.com/FreeRTOS/coreMQTT.git
+[submodule "coremqtt_agent"]
+	path = components/aws_iot/coremqtt_agent/library
+	url = https://github.com/FreeRTOS/coreMQTT-Agent.git
+[submodule "corepkcs11"]
+	path = components/aws_iot/corepkcs11/library
+	url = https://github.com/FreeRTOS/corePKCS11.git
+[submodule "iot_socket"]
+	path = components/connectivity/iot_socket/library
+	url = https://github.com/MDK-Packs/IoT_Socket.git
+[submodule "iot_vsocket"]
+	path = components/connectivity/iot_vsocket/library
+	url = https://github.com/ARM-software/AVH.git
+[submodule "freertos_kernel"]
+	path = components/freertos_kernel/library
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "freertos_libraries_integration_tests"]
+	path = components/tools/freertos_libraries_integration_tests/library
+	url = https://github.com/FreeRTOS/FreeRTOS-Libraries-Integration-Tests.git
+[submodule "freertos_ota_pal_psa"]
+	path = components/security/freertos_ota_pal_psa/library
+	url = https://github.com/Linaro/freertos-ota-pal-psa.git
+[submodule "freertos_plus_tcp"]
+	path = components/connectivity/freertos_plus_tcp/library
+	url = https://github.com/FreeRTOS/FreeRTOS-Plus-TCP.git
+[submodule "freertos_pkcs11_psa"]
+	path = components/security/freertos_pkcs11_psa/library
+	url = https://github.com/Linaro/freertos-pkcs11-psa.git
+[submodule "mbedtls"]
+	path = components/security/mbedtls/library
+	url = https://github.com/Mbed-TLS/mbedtls.git
+[submodule "open_iot_sdk_toolchain"]
+	path = components/tools/open_iot_sdk_toolchain/library
+	url = https://git.gitlab.arm.com/iot/open-iot-sdk/toolchain.git
+[submodule "ota_for_aws_iot_embedded_sdk"]
+	path = components/aws_iot/ota_for_aws_iot_embedded_sdk/library
+	url = https://github.com/aws/ota-for-aws-iot-embedded-sdk.git
+[submodule "tinycbor"]
+	path = components/aws_iot/tinycbor/library
+	url = https://github.com/intel/tinycbor.git
+[submodule "trusted_firmware-m"]
+	path = components/security/trusted_firmware-m/library
+	url = https://git.trustedfirmware.org/TF-M/trusted-firmware-m.git
+[submodule "unity"]
+	path = components/tools/unity/library
+	url = https://github.com/ThrowTheSwitch/Unity.git
+[submodule "ml_embedded_evaluation_kit"]
+	path = components/ai/ml_embedded_evaluation_kit/library
+	url = https://review.mlplatform.org/ml/ethos-u/ml-embedded-evaluation-kit.git
+[submodule "speexdsp"]
+	path = components/ai/speexdsp/library
+	url = https://gitlab.xiph.org/xiph/speexdsp.git
+[submodule "components/aws_iot/coresntp/library"]
+	path = components/aws_iot/coresntp/library
+	url = https://github.com/FreeRTOS/coreSNTP.git
+[submodule "isp_mali-c55"]
+	path = bsp/isp_mali-c55/library
+	url = https://git.gitlab.arm.com/iot/m-class/drivers/isp_mali-c55.git
+[submodule "components/graphics/arm-2d/library"]
+	path = components/graphics/arm-2d/library
+	url = https://github.com/ARM-software/Arm-2D.git
+[submodule "fff"]
+	path = components/tools/fff/library
+	url = https://github.com/meekrosoft/fff.git
+[submodule "googletest"]
+	path = components/tools/googletest/library
+	url = https://github.com/google/googletest.git
